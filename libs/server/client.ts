@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+let client: PrismaClient;
+
 declare global {
   var client: PrismaClient;
 }
