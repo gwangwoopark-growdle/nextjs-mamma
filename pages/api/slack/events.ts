@@ -30,6 +30,8 @@ if (slackEvents && webClient) {
       return;
     }
 
+    let result: string[] = [];
+
     if (strJson === "밥조") {
       const players = await client.player.findMany();
       players.sort(
@@ -37,7 +39,6 @@ if (slackEvents && webClient) {
           playerA.position - playerB.position
       );
       const members = players.map((player: Player) => player.name);
-      let result: string[] = [];
       result = getRandomMamma(members);
       for (let i = 0; i < result.length; i++) {
         await webClient.chat.postMessage({
@@ -45,17 +46,17 @@ if (slackEvents && webClient) {
           channel: event.channel,
         });
       }
+    } else {
+      try {
+        const query: any = JSON.parse(strJson);
+        result = getRandomGroup(query);
+      } catch (err) {
+        result[0] = String(
+          'Usage: {"names": "park, choi, kim, lee", "size":2 <optional, default: 4>, "message": "Lunch Teams" <optional>}'
+        );
+      }
     }
-
-    let result: string[] = [];
-    try {
-      const query: any = JSON.parse(strJson);
-      result = getRandomGroup(query);
-    } catch (err) {
-      result[0] = String(
-        'Usage: {"names": "park, choi, kim, lee", "size":2 <optional, default: 4>, "message": "Lunch Teams" <optional>}'
-      );
-    }
+    console.log("Result", result);
 
     for (let i = 0; i < result.length; i++) {
       await webClient.chat.postMessage({
