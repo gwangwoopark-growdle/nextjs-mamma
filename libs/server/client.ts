@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 declare global {
-  var client: PrismaClient | undefined;
+  var client: PrismaClient;
 }
 // Avoid instantiating too many instances of Prisma in development
 // https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices#problem
