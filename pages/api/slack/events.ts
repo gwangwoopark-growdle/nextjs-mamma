@@ -33,7 +33,10 @@ if (slackEvents && webClient) {
     let result: string[] = [];
 
     if (strJson === "밥조") {
+      console.log("밥조를보내주겠다");
+      console.log("client", client);
       const players = await client.player.findMany();
+      console.log(players);
       players.sort(
         (playerA: Player, playerB: Player) =>
           playerA.position - playerB.position
